@@ -1,30 +1,54 @@
 <script>
-	export let name;
-</script>
+	let nome = "";
+	let resumo = "";
+	
+	//$: conteudo = `Nome: ${nome}\nResumo: ${resumo}`;
+	
+  </script>
+	<header>
+		<h1>Curriculo Maker</h1>
+	</header>
+	<main>
+		<div class="container">
+			<div class="form">
+			<h2>Formulário</h2>
+			<form>
+				<label>
+					<p>Nome:</p>
+					<input bind:value="{nome}" />
+				</label>
+				<br />
+				<label>
+					<p>Texto:</p>
+					<textarea bind:value="{resumo}"></textarea>
+				</label>
+				<button type='submit'>Exportar</button>
+			</form>
+			</div>
+			
+			<div class="content">
+				<div>
+					<p>{nome}</p>
+					<p>{resumo}</p>
+				</div>
+			</div>
+		</div>
+	</main>
+  
+  <style>
+  .container {
+    display: flex;
+  }
 
-<main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-</main>
+  .form {
+    flex: 1;
+    padding: 20px;
+    border-right: 1px solid #ccc; /* Adiciona uma borda à direita */
+  }
 
-<style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
-</style>
+  .content {
+    flex: 1;
+    padding: 20px;
+  }
+  </style>
+	
