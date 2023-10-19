@@ -1,7 +1,10 @@
 <script>
+	import Template1 from './templates/template1.svelte';
+  	import Template2 from './templates/template2.svelte';
+
 	let nome = "";
 	let resumo = "";
-	
+	let selectedTemplate = null;
 	let competencias = [];
 
   function adicionarCompetencia() {
@@ -11,11 +14,20 @@
   function removerCompetencia(index) {
     competencias = competencias.filter((_, i) => i !== index);
   }
+
+  function selectTemplate(template) {
+    selectedTemplate = template;
+  }
+
   </script>
 	<header>
 		<h1>Curriculo Maker</h1>
 	</header>
 	<main>
+		<div class="botoes-template">
+			<button on:click="{() => selectTemplate('template1')}">Template 1</button>
+			<button on:click="{() => selectTemplate('template2')}">Template 2</button>
+		</div>
 	  <div class="container">
 		<div class="form">
 		  <h2>Formulário</h2>
@@ -44,20 +56,34 @@
 		  </form>
 		</div>
 		
-		<div class="content">
-		  <div>
+		<div class="content ">
+		  <!-- <div class= "{selectedTemplate}">
 			<p>{nome}</p>
 			<p>{resumo}</p>
-			{#each competencias as competencia,index}
-				{competencia.texto}
-				<br />
-			{/each}
-		  </div>
+				{#each competencias as competencia,index}
+					{competencia.texto}
+					<br />
+				{/each}
+		  </div> -->
+		  
+			{#if selectedTemplate === 'template1'}
+				<Template1 {nome} {resumo} {competencias} />
+			{:else if selectedTemplate === 'template2'}
+				<Template2 {nome} {resumo} {competencias} />
+			{/if}
 		</div>
 	  </div>
 	</main>
-	  
+
 	<style>
+	/* .template1  {
+		color: #d20000; 
+	}
+
+	.template2  {
+		color: rgb(0, 0, 247); 
+	
+	} */
 
 
   	header {
