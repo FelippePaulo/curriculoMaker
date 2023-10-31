@@ -19,6 +19,8 @@
     selectedTemplate = template;
   }
 
+
+
   </script>
 	<header>
 		<h1>Curriculo Maker</h1>
@@ -57,20 +59,14 @@
 		</div>
 		
 		<div class="content ">
-		  <!-- <div class= "{selectedTemplate}">
-			<p>{nome}</p>
-			<p>{resumo}</p>
-				{#each competencias as competencia,index}
-					{competencia.texto}
-					<br />
-				{/each}
-		  </div> -->
+			<!-- <button href = "./templates/template1.svelte">botao</button> -->
 		  
 			{#if selectedTemplate === 'template1'}
 				<Template1 {nome} {resumo} {competencias} />
 			{:else if selectedTemplate === 'template2'}
 				<Template2 {nome} {resumo} {competencias} />
 			{/if}
+			<!-- {@html filledTemplate} -->
 		</div>
 	  </div>
 	</main>
