@@ -1,6 +1,7 @@
 <script>
-	import { onMount } from 'svelte';
-	//import template from './templates/templateTeste1.txt'
+	//import { onMount } from 'svelte';
+	
+	//import templateTeste from './templates/templateTeste1.svelte'
 	let nome = "";
 	let resumo = "";
 	let selectedTemplate = null;
@@ -14,23 +15,21 @@
     competencias = competencias.filter((_, i) => i !== index);
   }
 
-  function selectTemplate(template) {
-    selectedTemplate = template;
-  }
   let fileContent = '';
 
-	onMount(async () => {
-	const response = await fetch('//templates//templateTeste1.txt');
-	fileContent = await response.text();
-	console.log(fileContent)
-	});
-	;
+	// onMount(async () => {
+	// const response = await fetch('//templates//templateTeste1.txt');
+	// fileContent = await response.text();
+	// console.log(fileContent)
+	// });
+	// ;
   
   	let props = {
 	nome: nome ,
 	resumo: resumo
 	}
-	let template = '<h2>{nome}</h2> <h1>{resumo}</h1>'; 
+	let template = '<h2>{nome}</h2> <h1>{resumo}</h1> '; 
+	
 	let filledTemplate = Object.entries(props).reduce((template, [key,value]) => {
 		return template.replaceAll(`{${key}}`, value)
 	},template)
@@ -56,32 +55,32 @@
 			<button on:click="{() => selectTemplate('template1')}">Template 1</button>
 			<button on:click="{() => selectTemplate('template2')}">Template 2</button>
 		</div>
-	  <div class="container">
-		<div class="form">
-		  <h2>Formulário</h2>
-		  <form>
-			<label>
-			  <p>Nome:</p>
-			  <input bind:value="{nome}" class="input-nome" on:input="{(e) => handleChange(e,'nome')}"/>
-			</label>
-			<br />
-			<label>
-			  <p>Texto:</p>
-			  <textarea bind:value="{resumo}" class="input-caixa-texto" on:input="{(e) => handleChange(e,'resumo')}"></textarea>
-			</label>
-			<br />
-			<p>Competências:</p>
-			
-			{#each competencias as competencia, index}
-			  <div class="competencia" key={index}>
-				<input bind:value="{competencia.texto}" />
-				<button type="button" on:click="{() => removerCompetencia(index)}">Remover</button>
-			  </div>
-			{/each}
-			<button type="button" on:click="{adicionarCompetencia}">Adicionar</button>
-			<br />
-			<button type='submit' class="exportar-curriculo">Exportar</button>
-		  </form>
+		<div class="container">
+			<div class="form">
+		  	<h2>Formulário</h2>
+		  	<form>
+				<label>
+				<p>Nome:</p>
+				<input bind:value="{nome}" class="input-nome" on:input="{(e) => handleChange(e,'nome')}"/>
+				</label>
+				<br />
+				<label>
+				<p>Texto:</p>
+				<textarea bind:value="{resumo}" class="input-caixa-texto" on:input="{(e) => handleChange(e,'resumo')}"></textarea>
+				</label>
+				<br />
+				<p>Competências:</p>
+				
+				{#each competencias as competencia, index}
+				<div class="competencia" key={index}>
+					<input bind:value="{competencia.texto}" />
+					<button type="button" on:click="{() => removerCompetencia(index)}">Remover</button>
+				</div>
+				{/each}
+				<button type="button" on:click="{adicionarCompetencia}">Adicionar</button>
+				<br />
+				<button type='submit' class="exportar-curriculo">Exportar</button>
+		  	</form>
 		</div>
 		
 		<div class="content ">
@@ -126,15 +125,23 @@
 	
 	  .form {
 		position:relative;
+		
 		flex: 1;
 		padding: 10px;
 		border-right: 1px solid #ccc;
+		
+		min-width: 47%;
 	  }
 	
 	  .content {
 		flex: 1;
+		
 		padding: 20px;
-	  }
+		max-width: 50%; /* Define a largura máxima do conteúdo */
+		box-sizing: border-box; /* Garante que o padding não aumente a largura total */
+		word-wrap: break-word;
+	}
+
 
 	  .competencia {
 			  margin-bottom: 10px;
