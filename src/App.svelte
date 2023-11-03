@@ -1,7 +1,6 @@
 <script>
-	import Template1 from './templates/template1.svelte';
-  	import Template2 from './templates/template2.svelte';
-
+	import { onMount } from 'svelte';
+	//import template from './templates/templateTeste1.txt'
 	let nome = "";
 	let resumo = "";
 	let selectedTemplate = null;
@@ -18,9 +17,36 @@
   function selectTemplate(template) {
     selectedTemplate = template;
   }
+  let fileContent = '';
 
+	onMount(async () => {
+	const response = await fetch('//templates//templateTeste1.txt');
+	fileContent = await response.text();
+	console.log(fileContent)
+	});
+	;
+  
+  	let props = {
+	nome: nome ,
+	resumo: resumo
+	}
+	let template = '<h2>{nome}</h2> <h1>{resumo}</h1>'; 
+	let filledTemplate = Object.entries(props).reduce((template, [key,value]) => {
+		return template.replaceAll(`{${key}}`, value)
+	},template)
 
-
+	function handleChange(event, variavel) {
+		props[variavel]  = event.target.value;
+		// console.log(props);
+		updateFilledTemplate();
+	}
+	
+	function updateFilledTemplate() {
+    	filledTemplate = Object.entries(props).reduce((template, [key,value]) => {
+      return template.replaceAll(`{${key}}`, value)
+    },template)
+  }
+  
   </script>
 	<header>
 		<h1>Curriculo Maker</h1>
@@ -36,12 +62,12 @@
 		  <form>
 			<label>
 			  <p>Nome:</p>
-			  <input bind:value="{nome}" class="input-nome"/>
+			  <input bind:value="{nome}" class="input-nome" on:input="{(e) => handleChange(e,'nome')}"/>
 			</label>
 			<br />
 			<label>
 			  <p>Texto:</p>
-			  <textarea bind:value="{resumo}" class="input-caixa-texto"></textarea>
+			  <textarea bind:value="{resumo}" class="input-caixa-texto" on:input="{(e) => handleChange(e,'resumo')}"></textarea>
 			</label>
 			<br />
 			<p>Competências:</p>
@@ -59,14 +85,9 @@
 		</div>
 		
 		<div class="content ">
-			<!-- <button href = "./templates/template1.svelte">botao</button> -->
-		  
-			{#if selectedTemplate === 'template1'}
-				<Template1 {nome} {resumo} {competencias} />
-			{:else if selectedTemplate === 'template2'}
-				<Template2 {nome} {resumo} {competencias} />
-			{/if}
-			<!-- {@html filledTemplate} -->
+			
+			{@html filledTemplate}
+			
 		</div>
 	  </div>
 	</main>
